@@ -1,0 +1,62 @@
+# ==================================================================
+# Exported camera pose (rotation and translation of the camera) for 
+# Florian and Amin (MotionBank project): 
+# In contrast to the extrinsic data, the exported rotation of the camera 
+# is the rotation from the WCS (world coordinate system) to the camera 
+# (and not vice versa). The exported position is NOT the translation of the 
+# camera pose, but the position of the camera in the WCS.
+
+# Description of recording, take and camera: 
+# Camera key: Recordings_2011_04_Solos_ExtrinsicCamLeft
+
+# Rotation_WCS_to_Camera (rotation matrix): 
+0.864575 -0.0976383 0.492927
+-0.501142 -0.239725 0.831498
+0.0369811 -0.965919 -0.256191
+# Rotation_WCS_to_Camera (quaternion, order: x y z w) 
+-0.768194 0.194866 -0.172453 0.584948 
+# Position of camera in the WCS: 
+-1.22784 -6.78289 3.56278
+
+
+# ==================================================================
+# Exported camera pose (rotation and translation of the camera) for 
+# Florian and Amin (MotionBank project): 
+# In contrast to the extrinsic data, the exported rotation of the camera 
+# is the rotation from the WCS (world coordinate system) to the camera 
+# (and not vice versa). The exported position is NOT the translation of the 
+# camera pose, but the position of the camera in the WCS.
+
+# Description of recording, take and camera: 
+# Camera key: Recordings_2011_04_Solos_ExtrinsicCamCenter
+
+# Rotation_WCS_to_Camera (rotation matrix): 
+0.999737 0.00223852 0.0228028
+-0.021768 -0.217796 0.975752
+0.00715059 -0.975992 -0.21769
+# Rotation_WCS_to_Camera (quaternion, order: x y z w) 
+-0.78026 0.00625737 -0.00959723 0.62535 
+# Position of camera in the WCS: 
+5.79188 -11.2932 4.96226
+
+
+# ==================================================================
+# Exported camera pose (rotation and translation of the camera) for 
+# Florian and Amin (MotionBank project): 
+# In contrast to the extrinsic data, the exported rotation of the camera 
+# is the rotation from the WCS (world coordinate system) to the camera 
+# (and not vice versa). The exported position is NOT the translation of the 
+# camera pose, but the position of the camera in the WCS.
+
+# Description of recording, take and camera: 
+# Camera key: Recordings_2011_04_Solos_ExtrinsicCamRight
+
+# Rotation_WCS_to_Camera (rotation matrix): 
+0.862688 0.144672 -0.484602
+0.505694 -0.234288 0.830291
+0.00658374 -0.961342 -0.275277
+# Rotation_WCS_to_Camera (quaternion, order: x y z w) 
+-0.770106 -0.211129 0.155179 0.581619 
+# Position of camera in the WCS: 
+13.5083 -7.13461 3.63259
+
