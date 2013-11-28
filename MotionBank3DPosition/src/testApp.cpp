@@ -12,14 +12,13 @@ void testApp::setup()
 	camera.setDollyForwardKey('a');
 	camera.setDollyBackwardKey('z');
 	
-	camera.orbit( 10, -20, 150 );
+	camera.orbit( 0, 50, 50 );
 	
 	
 	TrackVec3Reader::readVec3DFile( positionTrack,
 									"Ros_D01T01_withBackgroundAdjustment_Corrected/Tracked3DPosition_25fps.txt",
 								    0.0f,
 								    25.0f );
-	
 	
 	ofQuaternion recordingCameraLeftQuat( -0.768194, 0.194866, -0.172453, 0.584948 );
 	ofVec3f recordingCameraLeftPos( -1.22784, -6.78289, 3.56278 );
@@ -99,13 +98,27 @@ void testApp::draw()
 	
 		ofSetColor( ofColor::white );
 	
-		recordingCameraLeft.draw();
-		recordingCameraRight.draw();
-		recordingCameraCenter.draw();
+		//recordingCameraLeft.draw();
+		//recordingCameraRight.draw();
+		//recordingCameraCenter.draw();
+	
+		drawCamera( recordingCameraLeft );
+		drawCamera( recordingCameraRight );
+		drawCamera( recordingCameraCenter );
 	
 	camera.end();
 	
 	ofDisableDepthTest();
+}
+
+//--------------------------------------------------------------
+void testApp::drawCamera( ofCamera& _cam )
+{
+	ofPushMatrix();
+		ofMultMatrix( _cam.getGlobalTransformMatrix() );
+		ofDrawBox(1);
+		ofDrawAxis(6);
+	ofPopMatrix();
 }
 
 //--------------------------------------------------------------

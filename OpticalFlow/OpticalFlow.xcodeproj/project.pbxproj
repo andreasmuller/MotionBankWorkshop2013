@@ -282,6 +282,9 @@
 		C70D8946940288799E82131E /* ofxSliderGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSliderGroup.h; path = ../../../addons/ofxGui/src/ofxSliderGroup.h; sourceTree = SOURCE_ROOT; };
 		C76DE5C29BDBD2CAA1DD0021 /* ofxCvContourFinder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCvContourFinder.cpp; path = ../../../addons/ofxOpenCv/src/ofxCvContourFinder.cpp; sourceTree = SOURCE_ROOT; };
 		C88333E71C9457E441C33474 /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxButton.cpp; path = ../../../addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
+		CB62043B18460F33004D862C /* FlowFarnebackExt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlowFarnebackExt.h; sourceTree = "<group>"; };
+		CB62043C184612ED004D862C /* TrackedPoint2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackedPoint2D.h; sourceTree = "<group>"; };
+		CB6204BC18465E3F004D862C /* TrackedPoint2DCloseUpView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackedPoint2DCloseUpView.h; sourceTree = "<group>"; };
 		CB71EC651845140E007988EC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		CB71EC661845140E007988EC /* addon_config.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = addon_config.mk; sourceTree = "<group>"; };
 		CB71EC671845140E007988EC /* clone_addons.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = clone_addons.sh; sourceTree = "<group>"; };
@@ -1296,6 +1299,9 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
+				CB62043B18460F33004D862C /* FlowFarnebackExt.h */,
+				CB62043C184612ED004D862C /* TrackedPoint2D.h */,
+				CB6204BC18465E3F004D862C /* TrackedPoint2DCloseUpView.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

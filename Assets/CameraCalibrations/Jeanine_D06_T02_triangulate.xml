@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisionLib2 version='2.0'>
+  <ActionPipe category='Action' name='main'>
+    
+    <Triangulate3DPosFromTwo2DPointsAction category='Action' enabled='1' name='Triangulate3DPosFromTwo2DPoints' val='Triangulate3DPosFromTwo2DPointsAction'>
+      <Keys size='9'>
+        <key type='' val='IntrinsicCamLeft_Recordings2011_04' what='Intrinsic Cam1, IN'/>
+        <key type='' val='IntrinsicCamRight_Recordings2011_04' what='Intrinsic Cam2, IN'/>
+        
+        <key type='' val='ExtrinsicCamLeft_Recordings2011_04' what='Extrinsic Cam1, IN'/>
+        <key type='' val='ExtrinsicCamRight_Recordings2011_04' what='Extrinsic Cam2, IN'/>
+
+        <key type='' val='CamLeft_Points2D' what='Points 2D Cam1, IN'/>
+        <key type='' val='CamRight_Points2D' what='Points 2D Cam2, IN'/>
+
+        <key type='' val='Triangulate3DPosFromTwo2DPoints_Cam1Perspective' what='Internal'/>
+        <key type='' val='Triangulate3DPosFromTwo2DPoints_Cam2Perspective' what='Internal'/>
+
+        <key type='' val='Positions3D_GeomCont' what='Pos3D (GeomCont.), OUT OPT'/>
+      </Keys>
+      <ActionConfig 
+        File_2DPoints_Cam1='/Users/fjenett/Desktop/MOBA/2012_11-Triangulate3DPointsFrom2DPoints/2011-APRIL/Jeanine_D06_T02/Tracked2DPos_CamLeft.txt' 
+        File_2DPoints_Cam2='/Users/fjenett/Desktop/MOBA/2012_11-Triangulate3DPointsFrom2DPoints/2011-APRIL/Jeanine_D06_T02/Tracked2DPos_CamRight.txt' 
+        File_Reconstructed3DPoints='/Users/fjenett/Desktop/MOBA/2012_11-Triangulate3DPointsFrom2DPoints/2011-APRIL/Jeanine_D06_T02/Tracked3DPosition.txt' 
+        Read2DPointsFromFiles='1'
+        ReplaceInvalid3DPositionsWithLastValid3DPositions='1'/>
+    </Triangulate3DPosFromTwo2DPointsAction>
+
+    <MegaWidgetActionPipe height='480' name='Scene3D' show='1' width='640' x='0' y='0'>
+      <Keys size='8'>
+        <key val='mwap_Scene3D' what='internal use, do not set or change!'/>
+        <key val='' what='background, Image*, in'/>
+        <key val='' what='2D geometry, GeometryContainer, in'/>
+        <key val='' what='3D geometry, GeometryContainer, in'/>
+        <key val='' what='Camera extrinsic parameters, ExtrinsicData, in'/>
+        <key val='' what='Camera intrinsic parameters, IntrinsicDataPerspective, in'/>
+        <key val='WorldCoordSystem_m;StagePlane;' what='OSG 3D Models, OSGNodeData, in'/>
+        <key val='' what='caption string, StringData, in'/>
+      </Keys>
+        <GenericDrawAction category='Action' enabled='1' name='GenericDraw'>
+            <Keys size='3'>
+            <key val='Positions3D_GeomCont' what='data to draw, in'/>
+            <key val="mwap_Scene3D.nav_modelview" what="extrinsic data, in"/>
+            <key val="mwap_Scene3D.nav_projection" what="intrinsic data, in"/>
+            </Keys>
+            <ActionConfig CrossSize='0.01' Draw3D='1' DrawIndex='0'/>
+        </GenericDrawAction>	  
+    </MegaWidgetActionPipe>
+
+</ActionPipe>
+  
+  <DataSet key=''>
+  
+    <OSGNodeData 
+      fileName="/Users/fjenett/Desktop/MOBA/2012_11-Triangulate3DPointsFrom2DPoints/2011-APRIL/3D-Models/WorldCoordSystem_UnitSize_m.wrl" 
+      key="WorldCoordSystem_m"/>
+    <OSGNodeData 
+      fileName="/Users/fjenett/Desktop/MOBA/2012_11-Triangulate3DPointsFrom2DPoints/2011-APRIL/3D-Models/Plane.wrl" 
+      key="StagePlane"/>
+    
+    <!-- Intrinsic Camera Parameters -->
+    <IntrinsicDataPerspective calibrated="1" camerainfo='MotionBank_2011_04_CamCenter' key="IntrinsicCamCenter_Recordings2011_04">
+        <Image_Resolution h='1080' w='1920'/>
+        <Normalized_Principal_Point cx='0.5068594' cy='0.5083259'/>
+        <Normalized_Focal_Length_and_Skew fx='0.960699' fy='1.7165083' s='0.0'/>
+        <Lens_Distortion k1='-0.229692' k2='0.260637' k3='0.000971' k4='0.000368' k5='0.0'/>
+    </IntrinsicDataPerspective>      
+    
+    <IntrinsicDataPerspective calibrated="1" camerainfo='MotionBank_2011_04_CamLeft' key="IntrinsicCamLeft_Recordings2011_04">
+        <Image_Resolution h='1080' w='1920'/>
+        <Normalized_Principal_Point cx='0.4914' cy='0.4848'/>
+        <Normalized_Focal_Length_and_Skew fx='0.9691' fy='1.7302' s='0.0'/>
+        <Lens_Distortion k1='-0.218994' k2='0.175059' k3='0.00244' k4='-0.001355' k5='0.0'/>
+    </IntrinsicDataPerspective> 
+
+    <IntrinsicDataPerspective calibrated="1" camerainfo='MotionBank_2011_04_CamRight' key="IntrinsicCamRight_Recordings2011_04">
+        <Image_Resolution h='1080' w='1920'/>
+        <Normalized_Principal_Point cx='0.50663' cy='0.483735'/>
+        <Normalized_Focal_Length_and_Skew fx='0.99119' fy='1.76755' s='0.0'/>
+        <Lens_Distortion k1='-0.197812' k2='0.135983' k3='0.005245' k4='-0.001163' k5='0.0'/>
+    </IntrinsicDataPerspective> 
+    
+     <!-- Extrinsic Camera Parameters -->
+    <ExtrinsicData bUseQuaternion='1' calibrated='1' key='Extrinsic_CamCenter_Recordings2011_04' t='0'>
+      <R rotation='0.6253502625 0.7802600769 -0.006257365536 0.009597233327'/>
+      <t translation='[-6.071667467 2.37056274 11.96747797 ]'/>
+      <Cov covariance="0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;"/>
+    </ExtrinsicData>          
+     
+    <ExtrinsicData bUseQuaternion='1' calibrated='1' key='ExtrinsicCamLeft_Recordings2011_04' t='0'>
+      <R rotation='0.584948409 0.7681944587 -0.1948659841 0.1724525464'/>
+      <t translation='[-2.469386766 1.69543843 7.157942597 ]'/>
+      <Cov covariance="0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;"/>
+    </ExtrinsicData>
+
+    <ExtrinsicData bUseQuaternion='1' calibrated='1' key='ExtrinsicCamRight_Recordings2011_04' t='0'>
+      <R rotation='0.5816191647 0.7701059394 0.2111286909 -0.1551794612'/>
+      <t translation='[-8.069439892 -0.1336678099 13.46992451 ]'/>
+      <Cov covariance="0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;0  0  0  0  0  0  &#xA;"/>
+    </ExtrinsicData>    
+    
+  </DataSet>
+</VisionLib2>
+
+
