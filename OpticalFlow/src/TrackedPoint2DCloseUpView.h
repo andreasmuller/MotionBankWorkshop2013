@@ -29,6 +29,8 @@ class TrackedPoint2DCloseUpView
 			drawRect.set( ofGetWidth()-drawSize, 0, drawSize, drawSize );
 			srcRect.set(0,0,30,30);
 			
+			fontSmall = NULL;
+			
 			subscribeToEvents();
 		}
 	
@@ -55,14 +57,32 @@ class TrackedPoint2DCloseUpView
 			
 			ofSetColor( trackedPoint->color, 50 );
 			ofCircle( drawRect.x + drawRect.width * 0.5f, drawRect.y + drawRect.height * 0.5f, 2.0f );
+			
+			if( fontSmall != NULL && trackedPoint->name.length() > 0 )
+			{
+				ofVec2f drawPos( drawRect.x, drawRect.y + fontSmall->stringHeight(trackedPoint->name) + 1 );
+				drawPos += ofVec2f(2,1);
+				
+				ofSetColor( ofColor::white );
+				fontSmall->drawString( trackedPoint->name, drawPos.x+1, drawPos.y+1 );
+				
+				ofSetColor( trackedPoint->color );
+				fontSmall->drawString( trackedPoint->name, drawPos.x, drawPos.y );
+			}
+			
+			ofSetColor( trackedPoint->color );
+			ofNoFill();
+				ofRect( drawRect );
+			ofFill();
+			
 		}
 	
 		// -------------------------------------
 		void subscribeToEvents()
 		{
-			ofAddListener( ofEvents().mousePressed,  this, &TrackedPoint2DCloseUpView::mousePressed );
-			ofAddListener( ofEvents().mouseReleased, this, &TrackedPoint2DCloseUpView::mouseReleased );
-			ofAddListener( ofEvents().mouseDragged,  this, &TrackedPoint2DCloseUpView::mouseDragged );
+			ofAddListener( ofEvents().mousePressed,  this, &TrackedPoint2DCloseUpView::mousePressed,  OF_EVENT_ORDER_BEFORE_APP );
+			ofAddListener( ofEvents().mouseReleased, this, &TrackedPoint2DCloseUpView::mouseReleased, OF_EVENT_ORDER_BEFORE_APP );
+			ofAddListener( ofEvents().mouseDragged,  this, &TrackedPoint2DCloseUpView::mouseDragged,  OF_EVENT_ORDER_BEFORE_APP );
 		}
 		
 		// -------------------------------------
@@ -74,35 +94,44 @@ class TrackedPoint2DCloseUpView
 		}
 	
 		// -------------------------------------
-		void mousePressed(ofMouseEventArgs &e)
+		bool mousePressed(ofMouseEventArgs &e)
 		{
-			if( e.button == 0 )
+			ofVec2f mousePos(e.x,e.y);
+							
+			if( drawRect.inside( mousePos ) )
 			{
-				ofVec2f mousePos(e.x,e.y);
-								
-				if( drawRect.inside( mousePos ) )
+				if( e.button == 0 )
 				{
 					startDragPos = mousePos;
 					isDragged = true;
 				}
+					
+				return true; // we consume the event
 			}
+			
+			return false;
 		}
 		
 		// -------------------------------------
-		void mouseReleased(ofMouseEventArgs &e)
+		bool mouseReleased(ofMouseEventArgs &e)
 		{
 			isDragged = false;
+			return false;
 		}
 		
 		// -------------------------------------
-		void mouseDragged(ofMouseEventArgs &e)
+		bool mouseDragged(ofMouseEventArgs &e)
 		{
 			if( isDragged )
 			{
 				ofVec2f mousePos(e.x,e.y);
 				trackedPoint->pos -= ( mousePos - startDragPos ) * (srcRect.width / drawRect.width);
 				startDragPos = mousePos;
+				
+				return true; // we consume the event
 			}
+			
+			return false;
 		}
 	
 		ofRectangle drawRect;
@@ -116,4 +145,8 @@ class TrackedPoint2DCloseUpView
 	
 		bool isDragged;
 		ofVec2f startDragPos;
+	
+		ofTrueTypeFont* fontSmall;
+	
+		string name;
 };

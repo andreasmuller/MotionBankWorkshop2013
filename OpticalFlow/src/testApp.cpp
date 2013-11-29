@@ -18,7 +18,12 @@ void testApp::setup()
 	//ofDirectory tmpDir("/Volumes/Nanika USB 3.0/D01T01_Ros_center_subset_converted/");
 	//ofDirectory tmpDir("/Volumes/Nanika USB 3.0/D01T01_Ros_center_subset_converted_900wide/");
 	//ofDirectory tmpDir("/Volumes/Nanika USB 3.0/D01T01_Ros_center_subset_converted_1280wide/");
-	ofDirectory tmpDir("SourceData/D01T01_Ros_center_subset_converted_1280wide/");
+	//ofDirectory tmpDir("SourceData/D01T01_Ros_center_subset_converted_1280wide/");
+	//ofDirectory tmpDir("/Volumes/Nanika USB 3.0/2011_RosD01T01/D01T01_Ros_sync_Left/");
+	ofDirectory tmpDir("/Volumes/Nanika USB 3.0/2011_RosD01T01/D01T01_Ros_sync_Right/");
+		
+	outputDir = tmpDir.getAbsolutePath() + "_Position2D/";
+	ofDirectory::createDirectory( outputDir, false, true );
 	
 	tmpDir.allowExt("jpg");
 	tmpDir.allowExt("png");
@@ -28,6 +33,7 @@ void testApp::setup()
 		filenames.push_back( tmpDir.getPath(i) );
 	}
 	currentIndex = 0;
+	if( filenames.size() > currentIndex ) currentImage.loadImage(filenames.at(currentIndex));
 
 	
 	gui.setup("Flow Test");
@@ -43,6 +49,8 @@ void testApp::setup()
 	gui.add( drawFlow.set("drawFlow", true ) );
 
 	gui.add( flowDrawingScale.set("Flow Drawing Scale", 2.0f, 0.1f, 20.0f ) );
+	gui.add( flowDrawingStep.set("Flow Drawing Step", 3, 1, 20 ) );
+	
 	drawGui = true;
 		
 	//gui.add( useFarneback.set("useFarneback", true ) );
@@ -57,7 +65,7 @@ void testApp::setup()
 	 
 	curFlow = &farneback;
 	
-	float alpha = 0.3f;
+	float alpha = 0.05f;
 	ofFloatColor startColor(0.0f,0.0f,1.0f,alpha);
 	ofFloatColor endColor(1.0f,0.0f,0.0f,alpha);
 	
@@ -85,6 +93,34 @@ void testApp::setup()
 	timeline.setOffset( ofVec2f(0, ofGetHeight() - timeline.getHeight()) );
 	*/
 	
+	
+	trackedPoints.push_back( new TrackedPoint2D( ofVec2f(300,200) ) );
+	trackedPoints.back()->name = "Head";
+	
+	trackedPoints.push_back( new TrackedPoint2D( ofVec2f(340,250) ) );
+	trackedPoints.back()->name = "HandRight";
+	
+	trackedPoints.push_back( new TrackedPoint2D( ofVec2f(260,250) ) );
+	trackedPoints.back()->name = "HandLeft";
+	
+	trackedPoints.push_back( new TrackedPoint2D( ofVec2f(320,340) ) );
+	trackedPoints.back()->name = "FootRight";
+	
+	trackedPoints.push_back( new TrackedPoint2D( ofVec2f(280,340) ) );
+	trackedPoints.back()->name = "FootLeft";
+	
+	for( int i = 0; i < trackedPoints.size(); i++ )
+	{
+		trackedPoints.at(i)->fontSmall = &fontSmall;
+		
+		int drawSize = 100;
+		trackedPointCloseUpViews.push_back( new TrackedPoint2DCloseUpView( trackedPoints.at(i), &currentImage ) );
+		trackedPointCloseUpViews.back()->drawRect.set( ofGetWidth()-drawSize, i * drawSize, drawSize, drawSize );
+		
+		trackedPointCloseUpViews.back()->fontSmall = &fontSmall;
+		trackedPointCloseUpViews.back()->name = trackedPoints.at(i)->name;
+	}
+		
 	isPlaying = false;
 }
 
@@ -116,6 +152,7 @@ void testApp::update()
 				farneback.setUseGaussian( OPTFLOW_FARNEBACK_GAUSSIAN );
 			
 				farneback.setDrawExtraScaling( flowDrawingScale );
+				farneback.drawStepSize = flowDrawingStep;
 			
 			//}
 			/*
@@ -142,6 +179,24 @@ void testApp::update()
 			}
 				
 			pointsBoundingBox = getBoundingBox( trackedPoints );
+								
+			for( unsigned int i = 0; i < trackedPoints.size(); i++ )
+			{
+				trackedPoints.at(i)->update();
+			}
+				
+			// we don't save every frame
+			int framesBetweenSaving = 10;
+			bool doSaveThisFrame = ofGetFrameNum() % framesBetweenSaving;
+			//string outputPath = "Output/";
+					
+			if( doSaveThisFrame )
+			{
+				for( unsigned int i = 0; i < trackedPoints.size(); i++ )
+				{
+					trackedPoints.at(i)->save(outputDir);
+				}
+			}
 		}
 		
 	}
@@ -158,11 +213,17 @@ void testApp::draw()
 	
 	float tmpRel = ofGetWidth() / currentImage.getWidth();
 	
+	// hackety hack.
+	for( unsigned int i = 0; i < trackedPoints.size(); i++ )
+	{
+		trackedPoints.at(i)->stageScale = tmpRel;
+	}
+	
 //	videoPlayer.draw(0,0);
 	
 	ofPushMatrix();
 		
-		//ofScale( tmpRel, tmpRel, 1.0f );
+		ofScale( tmpRel, tmpRel, 1.0f );
 		if( currentImage.isAllocated() ) currentImage.draw(0,0);
 		
 		ofEnableAlphaBlending();
@@ -174,11 +235,13 @@ void testApp::draw()
 				trackedPoints.at(i)->draw();
 			}
 	
+			/*
 			ofSetColor( ofColor::blue, 40 );
 			ofNoFill();
 			ofRect( pointsBoundingBox );
 			ofFill();
-	
+			 */
+			 
 		ofDisableAlphaBlending();
 	
 	ofPopMatrix();

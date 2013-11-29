@@ -66,6 +66,9 @@ public:
 	//ofParameter<float> minDistance;
 	
 	ofParameter<float> flowDrawingScale;
+	ofParameter<int> flowDrawingStep;
+	
+	string outputDir;
 	
 	ofTrueTypeFont fontSmall;
 	
