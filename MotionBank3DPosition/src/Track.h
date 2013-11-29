@@ -30,23 +30,22 @@ class Track
 			if(values.size()==0)
 			{
 				// hmm, how return a generic 0
+				return T();
 			}
 			
 			int index = getIndex( _t, _loop );
-			
-			//cout << "index: " << index << endl;
-			
+						
 			T returnVal = values.at(index);
 			
-			if( _interpolate )
+			if( _interpolate && index < values.size()-2)
 			{
 				float fps = trackLength / values.size();
 				float localTime = fmod( _t, fps );
 				float tmpFrac = localTime / fps;
 				
-				int nextIndex =  getIndex( _t + fps, false );
+				int nextIndex =  getIndex( _t + fps, _loop );
 				T nextVal = values.at(nextIndex);
-				
+								
 				return returnVal + (nextVal-returnVal) * tmpFrac;
 			}
 			
@@ -96,7 +95,7 @@ class Track
 			
 			_t = ofClamp( _t, 0.0f, trackLength );
 			
-			return (_t / trackLength) * values.size();
+			return (_t / trackLength) * (values.size()-1);
 		}
 	
 		vector<T> values;

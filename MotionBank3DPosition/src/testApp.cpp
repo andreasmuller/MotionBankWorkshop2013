@@ -12,13 +12,30 @@ void testApp::setup()
 	camera.setDollyForwardKey('a');
 	camera.setDollyBackwardKey('z');
 	
-	camera.orbit( 0, 50, 50 );
+
+	camera.orbit( 0, 70, 10, ofVec3f(10,0,0) );
 	
+	/*
+	positionTracks.push_back( Track<ofVec3f>() );
 	
-	TrackVec3Reader::readVec3DFile( positionTrack,
+	TrackVec3Reader::readVec3DFile( positionTracks.back(),
 									"Ros_D01T01_withBackgroundAdjustment_Corrected/Tracked3DPosition_25fps.txt",
 								    0.0f,
 								    25.0f );
+	*/
+	
+	ofDirectory tmpDir("D01T01_Ros_sync_Position3D");
+	tmpDir.allowExt("txt");
+	int numFiles = tmpDir.listDir();
+	for( int i = 0; i < numFiles; i++ )
+	{
+		positionTracks.push_back( Track<ofVec3f>() );
+		
+		TrackVec3Reader::readVec3DFile( positionTracks.back(),
+									   tmpDir.getPath(i),
+									   0.0f,
+									   25.0f );
+	}
 	
 	ofQuaternion recordingCameraLeftQuat( -0.768194, 0.194866, -0.172453, 0.584948 );
 	ofVec3f recordingCameraLeftPos( -1.22784, -6.78289, 3.56278 );
@@ -65,6 +82,14 @@ void testApp::draw()
 			//ofRotateX( -90 );
 			//ofTranslate(0,0,0);
 	
+			for( unsigned int i = 0; i < positionTracks.size(); i++ )
+			{
+				ofColor tmpCol;
+				tmpCol.setHsb( i * (255.0f/positionTracks.size() ), 200, 200 );
+				drawTrack( positionTracks.at(i), tmpCol );
+			}
+
+/*
 			ofVec3f tmpPos;
 			//tmpPos.set( ofRandom(-10, 10), ofRandom(0, 10), ofRandom(-10, 10) );
 			if( positionTrack.trackIsValid() )
@@ -93,7 +118,8 @@ void testApp::draw()
 				}
 			}
 			tmpMesh.draw();
-		
+*/
+ 
 		ofPopMatrix();
 	
 		ofSetColor( ofColor::white );
@@ -112,12 +138,40 @@ void testApp::draw()
 }
 
 //--------------------------------------------------------------
+void testApp::drawTrack( Track<ofVec3f>& _track, ofColor _color )
+{
+	float trailLengthSeconds = 4.0f;
+	float fps = 25;
+	int steps = trailLengthSeconds * fps;
+	
+	if( _track.trackIsValid() )
+	{
+		float trailLengthSeconds = 20.0f;
+		float fps = 25;
+		int steps = trailLengthSeconds * fps;
+		
+		scratchMesh.clear();
+		scratchMesh.setMode( OF_PRIMITIVE_LINE_STRIP );
+		float currTime = ofGetElapsedTimef();
+		for( int i = 0; i < steps; i++ )
+		{
+			scratchMesh.addVertex( _track.getValueAtTime(currTime-(i*(1.0f/fps)), false, true) );
+			scratchMesh.addColor( ofColor(_color, ofMap(i, 0, steps, 255,0 )) );
+		}
+		scratchMesh.draw();
+		
+		ofDrawSphere( _track.getValueAtTime(currTime), 0.1f );
+	}
+
+}
+
+//--------------------------------------------------------------
 void testApp::drawCamera( ofCamera& _cam )
 {
 	ofPushMatrix();
 		ofMultMatrix( _cam.getGlobalTransformMatrix() );
-		ofDrawBox(1);
-		ofDrawAxis(6);
+		ofDrawBox(0.3);
+		ofDrawAxis(2);
 	ofPopMatrix();
 }
 

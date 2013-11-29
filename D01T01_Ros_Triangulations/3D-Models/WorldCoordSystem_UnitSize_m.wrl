@@ -1,0 +1,89 @@
+#VRML V2.0 utf8
+
+Transform {
+  translation 0 0 0
+  scale 1.0 1.0 1.0  # scale 1,1,1 means: We use "meters" as the unit in which we specify the size of the objects
+  children [ 
+
+        # DRAW THE X, Y AND Z AXIS
+        # We use a separate LineSet for every axis because else the illumination isn't handled correctly in the VisionLib
+        
+        # x Axis
+        Shape {
+          appearance Appearance {
+            material Material {
+                emissiveColor 1.0 0.0 0.0
+            } # end material
+          } # end appearance
+          geometry IndexedLineSet {
+            colorPerVertex    FALSE
+            coord Coordinate {
+              point [
+                #points of unit cube
+                 0 0 0,
+                 1 0 0,
+                ]  # end point
+            } # end coord
+            coordIndex [
+              #faces
+               0, 1, -1, # x axis
+            ] # end coordIndex
+          } # end geometry
+        } # end shape
+        
+        # y Axis
+        Shape {
+          appearance Appearance {
+            material Material {
+                emissiveColor 0.0 1.0 0.0
+            } # end material
+          } # end appearance
+          geometry IndexedLineSet {
+            colorPerVertex    FALSE
+            coord Coordinate {
+              point [
+                #points of unit cube
+                 #front
+                 0 0 0,
+                 0 1 0,
+                ]  # end point
+            } # end coord
+            coordIndex [
+              #faces
+               0, 1, -1, # y axis
+               
+            ] # end coordIndex
+          } # end geometry
+        } # end shape
+
+        # z Axis
+        Shape {
+          appearance Appearance {
+            material Material {
+                emissiveColor 0.0 0.0 1.0
+            } # end material
+          } # end appearance
+          geometry IndexedLineSet {
+            colorPerVertex    FALSE
+            coord Coordinate {
+              point [
+                #points of unit cube
+                 #front
+                 0 0 0,
+                 0 0 1,
+                ]  # end point
+            } # end coord
+            coordIndex [
+              #faces
+               0, 1, -1, # z axis
+               
+            ] # end coordIndex
+          } # end geometry
+        } # end shape
+    ]
+}
+
+  
+
+  
+  

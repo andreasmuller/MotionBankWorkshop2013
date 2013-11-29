@@ -1,0 +1,67 @@
+#VRML V2.0 utf8
+
+Inline
+{
+  url "C:\dev\VisionLib\Resources\3dModels\tof\WorldCoordSystem_UnitSize_m.wrl"
+}
+
+
+
+
+DEF Ground_Floor Transform               #Scale: m
+{
+  scale 12.11 12.56 0.00001
+  #rotation 1 0 0 1.57
+  children
+  [
+      Shape {
+          appearance Appearance {
+            texture ImageTexture {
+               url [ "Textures/rauhfa01.jpg" ]
+            }
+            textureTransform TextureTransform {
+              scale 7 7
+            }
+            material Material {
+              #emissiveColor 0 0 1
+              transparency 0.5
+            }
+          }
+      geometry IndexedFaceSet {
+        solid FALSE
+
+        coord Coordinate {
+          point [
+            0.0 1.0 1.0, #0 links oben vorn
+            0.0 0.0 1.0, #1 links unten vorn
+            1.0 0.0 1.0, #2 rechts unten vorn
+            1.0 1.0 1.0, #3 rechts oben vorn
+          ]
+        }
+        coordIndex [
+          0 1 2 3, -1
+        ]
+      
+        
+      }
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

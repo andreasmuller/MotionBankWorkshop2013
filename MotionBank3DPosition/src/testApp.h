@@ -14,7 +14,9 @@ class testApp : public ofBaseApp
 		void draw();
 	
 		void drawCamera( ofCamera& _cam );
-		
+			
+		void drawTrack( Track<ofVec3f>& _track, ofColor _color = ofColor::white );
+	
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y);
@@ -25,14 +27,17 @@ class testApp : public ofBaseApp
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	
-		Track<ofVec3f> positionTrack;
+		vector< Track<ofVec3f> > positionTracks;
 
 		int maxPositionHistoryLength;
-		deque<ofVec3f> positionHistory;
+	
+		vector< deque<ofVec3f> > positionHistories;
 	
 		ofEasyCamExt camera;
 	
 		ofCamera recordingCameraLeft;
 		ofCamera recordingCameraRight;
 		ofCamera recordingCameraCenter;
+	
+		ofMesh scratchMesh;
 };

@@ -20,7 +20,7 @@ void testApp::setup()
 	//ofDirectory tmpDir("/Volumes/Nanika USB 3.0/D01T01_Ros_center_subset_converted_1280wide/");
 	//ofDirectory tmpDir("SourceData/D01T01_Ros_center_subset_converted_1280wide/");
 	//ofDirectory tmpDir("/Volumes/Nanika USB 3.0/2011_RosD01T01/D01T01_Ros_sync_Left/");
-	ofDirectory tmpDir("/Volumes/Nanika USB 3.0/2011_RosD01T01/D01T01_Ros_sync_Right/");
+	ofDirectory tmpDir("/Volumes/Nanika USB 3.0 1/2011_RosD01T01/D01T01_Ros_sync_Left/");
 		
 	outputDir = tmpDir.getAbsolutePath() + "_Position2D/";
 	ofDirectory::createDirectory( outputDir, false, true );
