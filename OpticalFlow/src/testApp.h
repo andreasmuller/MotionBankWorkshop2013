@@ -3,7 +3,7 @@
 #include "ofMain.h"
 //#include "ofxAutoControlPanel.h"
 #include "ofxGui.h"
-#include "ofxTimeline.h"
+//#include "ofxTimeline.h"
 #include "ofxCv.h"
 #include "FlowFarnebackExt.h"
 
